@@ -12,7 +12,9 @@ id -u $USER &>/dev/null || adduser $USER --disabled-password --gecos "" && echo 
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/' /home/$USER/.bashrc
 
 apt-get update; apt-get upgrade -y;
-apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils ipset
+apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils ipset debian-keyring
+gpg --keyserver pgp.mit.edu --recv-keys 1F41B907
+gpg --armor --export 1F41B907 | apt-key add
 update-alternatives --set editor /usr/bin/vim.basic
 locale-gen "ru_RU.UTF-8"
 sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -92,6 +94,15 @@ echo "deb http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/source
 echo "deb-src http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
 apt-get update && \
 apt-get install deb-multimedia-keyring
+
+echo "deb http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
+echo "deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
+wget http://www.dotdeb.org/dotdeb.gpg && \
+apt-key add dotdeb.gpg && \
+apt-get update && apt-get upgrade \
+rm dotdeb.gpg
+apt-get -y install nginx
+
 
 export DEBIAN_FRONTEND="noninteractive"
 echo mysql-community-server mysql-community-server/root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
