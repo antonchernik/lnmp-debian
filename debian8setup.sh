@@ -96,7 +96,7 @@ apt-get install deb-multimedia-keyring
 export DEBIAN_FRONTEND="noninteractive"
 echo mysql-community-server mysql-community-server/root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
 echo mysql-community-server mysql-community-server/re-root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
-apt-get -y install mysql-server
+apt-get -y --force-yes install mysql-server
 #mysql_secure_installation
 
 mkdir /opt/lnmp-debian
