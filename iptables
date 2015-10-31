@@ -1,0 +1,2 @@
+#!/bin/sh
+/sbin/iptables-restore < /opt/lnmp-debian/iptables.up.rules
