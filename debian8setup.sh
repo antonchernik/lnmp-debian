@@ -12,7 +12,7 @@ id -u $USER &>/dev/null || adduser $USER --disabled-password --gecos "" && echo 
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/' /home/$USER/.bashrc
 
 apt-get update; apt-get upgrade -y;
-apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils ipset debian-keyring
+apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils ipset debian-keyring fail2ban
 gpg --keyserver pgp.mit.edu --recv-keys 1F41B907
 gpg --armor --export 1F41B907 | apt-key add
 update-alternatives --set editor /usr/bin/vim.basic
