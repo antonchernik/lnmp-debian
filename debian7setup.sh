@@ -1,5 +1,5 @@
 apt-get update; apt-get upgrade -y;
-apt-get -y install vim htop cron zip unzip wget curl mc apache2-utils
+apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils
 update-alternatives --set editor /usr/bin/vim.basic
 locale-gen "ru_RU.UTF-8"
 sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -11,7 +11,7 @@ echo "Europe/Kiev" > /etc/timezone && \
 dpkg-reconfigure -f noninteractive tzdata
 
 sed -i -e 's/"syntax on/syntax on\ncolorscheme ron\nset number/' /etc/vim/vimrc
-echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" > ~/.bashrc
+echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> ~/.bashrc
 
 apt-get -y install bsdutils build-essential libaio1 libssl-dev libcurl4-openssl-dev libevent-dev sendmail-bin sensible-mda
 apt-get -y install module-init-tools
