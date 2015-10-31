@@ -109,11 +109,8 @@ wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-bla
 for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
 for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blacklist $i; done
 
-
-
-wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
-
-/etc/network/if-pre-up.d/iptables
+#Load Iptables
+/sbin/iptables-restore < /opt/lnmp-debian/iptables.up.rules
 
 
 
