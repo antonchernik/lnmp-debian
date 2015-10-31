@@ -94,6 +94,7 @@ echo "deb http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/source
 echo "deb-src http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
 apt-get update && \
 apt-get install deb-multimedia-keyring
+gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5
 
 echo "deb http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
 echo "deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
