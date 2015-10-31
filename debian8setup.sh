@@ -10,7 +10,7 @@ MYSQL_ROOT_PASSWORD=access
 #If user does not exists create it
 id -u $USER &>/dev/null || adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
 apt-get update; apt-get upgrade -y;
-apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils
+apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils ipset
 update-alternatives --set editor /usr/bin/vim.basic
 locale-gen "ru_RU.UTF-8"
 sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -97,6 +97,23 @@ echo mysql-community-server mysql-community-server/re-root-pass password $MYSQL_
 apt-get -y install mysql-server
 #mysql_secure_installation
 
+mkdir /opt/lnmp-debian
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables.up.rules -P /opt/lnmp-debian
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables -P /opt/lnmp-debian
+mv /opt/lnmp-debian/iptables /etc/network/if-pre-up.d/iptables
+chmod +x /etc/network/if-pre-up.d/iptables
+mkdir /opt/lnmp-debian/ipset
+wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
+
+for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
+for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blacklist $i; done
+
+
+
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
+
+/etc/network/if-pre-up.d/iptables
 
 
 
