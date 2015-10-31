@@ -1,7 +1,7 @@
 #Intallation:
 cd /opt <br />
 wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/debian8setup.sh <br />
-chmdo +x /opt/debian8setup.sh <br />
+chmod +x /opt/debian8setup.sh <br />
 
 
 Debian 8 setup: <br />
