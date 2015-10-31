@@ -53,14 +53,13 @@ sed -i -e "s/group = www-data/group = $GROUP/g" /etc/php5/fpm/pool.d/php.conf
 sed -i -e "s/listen.group = user/listen.group = www-data/g" /etc/php5/fpm/pool.d/php.conf
 sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/php.conf
 
-deb-src http://repo.mysql.com/apt/debian/ jessie mysql-5.6 >> /etc/apt/sources.list.d/mysql.list
-deb http://repo.mysql.com/apt/debian/ jessie mysql-5.6 >> /etc/apt/sources.list.d/mysql.list
-deb http://repo.mysql.com/apt/debian/ jessie mysql-apt-config >> /etc/apt/sources.list.d/mysql.list
-
-apt-key adv --keyserver keys.gnupg.net --recv-keys 5072E1F5
-apt-cache pkgnames | grep mysql | sort
-apt-get install -y mysql-server php5-mysql
-
-
+apt-get -y install imagemagick php5-imagick
+apt-get -y install sendmail-bin sensible-mda
+apt-get -y install gcc g++ libboost-dev libboost-program-options-dev
+apt-get -y install gearman-job-server libgearman-dev
+pecl install gearman
+echo "extension=gearman.so" | tee /etc/php5/mods-available/gearman.ini
+ln -s /etc/php5/mods-available/gearman.ini /etc/php5/cli/conf.d/20-gearman.ini
+ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
 
 
