@@ -1,3 +1,12 @@
+#!/bin/sh
+#Debian user
+USER=user
+#Debian user group
+GROUP=user
+#Debian user password
+PASSWORD=access
+#If user does not exists create it
+id -u $USER &>/dev/null || adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
 apt-get update; apt-get upgrade -y;
 apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils
 update-alternatives --set editor /usr/bin/vim.basic
@@ -11,7 +20,7 @@ echo "Europe/Kiev" > /etc/timezone && \
 dpkg-reconfigure -f noninteractive tzdata
 
 sed -i -e 's/"syntax on/syntax on\ncolorscheme ron\nset number/' /etc/vim/vimrc
-echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> ~/.bashrc
+echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\# '" >> ~/.bashrc
 
 apt-get -y install bsdutils build-essential libaio1 libssl-dev libcurl4-openssl-dev libevent-dev sendmail-bin sensible-mda
 apt-get -y install module-init-tools
@@ -28,3 +37,30 @@ sed -i "s/;opcache.enable=0/opcache.enable=0/" /etc/php5/fpm/php.ini
 
 curl -sS https://getcomposer.org/installer | php && \
 mv composer.phar /usr/local/bin/composer
+
+cp /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/php.conf
+mv /etc/php5/fpm/pool.d/www.conf /etc/php5/fpm/pool.d/www.conf.old
+
+sed -i "s/\[www\]/\[php\]/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/.*listen =.*/listen = \/var\/run\/php-fpm.sock/" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/pm.max_children = 5/pm.max_children = 9/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/pm.start_servers = 2/pm.start_servers = 3/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/pm.min_spare_servers = 1/pm.min_spare_servers = 2/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/pm.max_spare_servers = 3/pm.max_spare_servers = 4/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/pm.max_requests = 500/pm.max_requests = 200/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/user = www-data/user = $USER/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/group = www-data/group = $GROUP/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/listen.group = user/listen.group = www-data/g" /etc/php5/fpm/pool.d/php.conf
+sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/php.conf
+
+deb-src http://repo.mysql.com/apt/debian/ jessie mysql-5.6 >> /etc/apt/sources.list.d/mysql.list
+deb http://repo.mysql.com/apt/debian/ jessie mysql-5.6 >> /etc/apt/sources.list.d/mysql.list
+deb http://repo.mysql.com/apt/debian/ jessie mysql-apt-config >> /etc/apt/sources.list.d/mysql.list
+
+apt-key adv --keyserver keys.gnupg.net --recv-keys 5072E1F5
+apt-cache pkgnames | grep mysql | sort
+apt-get install -y mysql-server php5-mysql
+
+
+
+
