@@ -1,5 +1,9 @@
-# lnmp-debian
-Lnmp setup script
+Intallation:
+cd /opt
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/debian8setup.sh
+chmdo +x debian8setup.sh
+
+
 Debian 8 setup: <br />
 https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/debian8setup.sh <br />
 Botnet iplist: <br />
