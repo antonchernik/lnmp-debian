@@ -10,7 +10,7 @@ MYSQL_ROOT_PASSWORD=access
 #If user does not exists create it
 id -u $USER &>/dev/null || adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
 apt-get update; apt-get upgrade -y;
-apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils
+apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils
 update-alternatives --set editor /usr/bin/vim.basic
 locale-gen "ru_RU.UTF-8"
 sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
@@ -71,11 +71,10 @@ ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
 
 echo "deb-src http://repo.mysql.com/apt/debian/ jessie mysql-5.7" >> /etc/apt/sources.list.d/mysql.list
 echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7"  >> /etc/apt/sources.list.d/mysql.list
+echo " deb http://repo.mysql.com/apt/debian/ jessie mysql-apt-config" >> /etc/apt/sources.list.d/mysql.list
 apt-get update; apt-get upgrade -y;
 
-echo "mysql-server mysql-server/root_password password $MYSQL_ROOT_PASSWORD" | debconf-set-selections 
-echo "mysql-server mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD" | debconf-set-selections 
-apt-get -y install mysql-server
+
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list
@@ -91,6 +90,13 @@ echo "deb http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/source
 echo "deb-src http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
 apt-get update && \
 apt-get install deb-multimedia-keyring
+
+export DEBIAN_FRONTEND="noninteractive"
+echo mysql-community-server mysql-community-server/root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
+echo mysql-community-server mysql-community-server/re-root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
+apt-get -y install mysql-server
+#mysql_secure_installation
+
 
 
 
