@@ -107,8 +107,9 @@ chmod +x /etc/network/if-pre-up.d/iptables
 mkdir /opt/lnmp-debian/ipset
 wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
 wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
-
+ipset -N china hash:net
 for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
+ipset -N blacklist hash:net
 for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blacklist $i; done
 
 #Load Iptables
