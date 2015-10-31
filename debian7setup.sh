@@ -1,4 +1,5 @@
-apt-get install vim htop cron zip unzip wget curl mc apache2-utils
+apt-get update; apt-get upgrade -y;
+apt-get -y install vim htop cron zip unzip wget curl mc apache2-utils
 update-alternatives --set editor /usr/bin/vim.basic
 locale-gen "ru_RU.UTF-8"
 export LANGUAGE=ru_RU.UTF-8 && \
@@ -10,8 +11,8 @@ echo "Europe/Kiev" > /etc/timezone && \
 dpkg-reconfigure -f noninteractive tzdata
 
 
-apt-get install module-init-tools
-apt-get install php5-cli php-pear php5-curl php5-gd php5-mcrypt php5-dev php5-intl php5-fpm memcached php5-memcached php5-xsl imagemagick php5-imagick
+apt-get -y install module-init-tools
+apt-get -y install php5-cli php-pear php5-curl php5-gd php5-mcrypt php5-dev php5-intl php5-fpm memcached php5-memcached php5-xsl imagemagick php5-imagick
 sed -i 's/\;date\.timezone\ \=/date\.timezone\ \=\ Europe\/Kiev/g' /etc/php5/cli/php.ini
 sed -i 's/\;date\.timezone\ \=/date\.timezone\ \=\ Europe\/Kiev/g' /etc/php5/fpm/php.ini
 sed -i "s/max_execution_time = .*/max_execution_time = 60/" /etc/php5/fpm/php.ini
