@@ -8,7 +8,7 @@ PASSWORD=access
 #Mysql root password
 MYSQL_ROOT_PASSWORD=access
 #If user does not exists create it
-id -u $USER &>/dev/null || adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
+adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/' /home/$USER/.bashrc
 
 apt-get update; apt-get upgrade -y;
