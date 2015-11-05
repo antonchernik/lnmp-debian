@@ -10,3 +10,6 @@ Botnet iplist: <br />
 https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt <br />
 Iptable rules: <br />
 https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables.up.rules <br />
+
+#Jenkins setup:
+https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/jenkins.sh <br />
