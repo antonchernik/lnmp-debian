@@ -1,4 +1,13 @@
 #!/bin/sh
+### BEGIN INIT INFO
+# Provides:          gearmand
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the gearmand job server
+# Description:       starts gearmand using start-stop-daemon
+### END INIT INFO
 
 # Gearman server and library
 # Copyright (C) 2008 Brian Aker, Eric Day
