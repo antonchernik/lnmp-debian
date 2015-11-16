@@ -36,8 +36,6 @@ sed -i "s/upload_max_filesize = .*/upload_max_filesize = 32M/" /etc/php5/fpm/php
 sed -i "s/post_max_size = .*/post_max_size = 32M/" /etc/php5/fpm/php.ini
 sed -i "s/short_open_tag = .*/short_open_tag = On/" /etc/php5/fpm/php.ini
 sed -i "s/short_open_tag = .*/short_open_tag = On/" /etc/php5/cli/php.ini
-sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini
-sed -i "s/;opcache.enable=0/opcache.enable=0/" /etc/php5/fpm/php.ini
 sed -i -e 's/-m 64/-m 256/' /etc/memcached.conf
 /etc/init.d/memcached restart
 
