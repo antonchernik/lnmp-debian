@@ -62,22 +62,23 @@ apt-get -y install imagemagick php5-imagick
 apt-get -y install sendmail-bin sensible-mda
 apt-get -y install gcc g++ libboost-dev
 apt-get -y install libboost-program-options-dev libboost-all-dev libevent-dev cloog-ppl gperf uuid-dev libgearman-dev
-#wget https://launchpad.net/gearmand/1.2/1.1.1/+download/gearmand-1.1.1.tar.gz
-#tar -xvf gearmand-1.1.1.tar.gz && cd gearmand-1.1.1/
-#./configure
-#make
-#make install && cd ..
-apt-get install gearman-job-server libgearman-dev
-pecl download gearman-1.1.0
-tar -xvf gearman-1.1.0.tgz
-cd gearman-1.1.0
+wget https://launchpad.net/gearmand/1.2/1.1.12/+download/gearmand-1.1.12.tar.gz
+tar -xvf gearmand-1.1.12.tar.gz && cd gearmand-1.1.12/
+./configure
+make
+make install && cd ..
+rm gearmand-1.1.12.tar.gz
+pecl download gearman-1.1.2
+tar -xvf gearman-1.1.2.tgz
+cd gearman-1.1.2
 phpize
 ./configure
 make
 checkinstall
 make clean
 make test
-make install
+make install && cd ..
+rm gearman-1.1.2.tgz
 echo "extension=gearman.so" | tee /etc/php5/mods-available/gearman.ini
 ln -s /etc/php5/mods-available/gearman.ini /etc/php5/cli/conf.d/20-gearman.ini
 ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
