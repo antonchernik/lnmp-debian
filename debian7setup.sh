@@ -73,10 +73,10 @@ ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
 /etc/init.d/gearman-job-server restart
 /etc/init.d/php5-fpm restart
 
-echo "deb-src http://repo.mysql.com/apt/debian/ jessie mysql-5.7" >> /etc/apt/sources.list.d/mysql.list
-echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7"  >> /etc/apt/sources.list.d/mysql.list
-echo " deb http://repo.mysql.com/apt/debian/ jessie mysql-apt-config" >> /etc/apt/sources.list.d/mysql.list
-apt-get update; apt-get upgrade -y;
+#echo "deb-src http://repo.mysql.com/apt/debian/ wheezy mysql-5.7" >> /etc/apt/sources.list.d/mysql.list
+#echo "deb http://repo.mysql.com/apt/debian/ wheezy mysql-5.7"  >> /etc/apt/sources.list.d/mysql.list
+#echo " deb http://repo.mysql.com/apt/debian/ wheezy mysql-apt-config" >> /etc/apt/sources.list.d/mysql.list
+#apt-get update; apt-get upgrade -y;
 
 
 
@@ -90,14 +90,14 @@ echo "extension=mongo.so" | tee /etc/php5/mods-available/mongo.ini
 ln -s /etc/php5/mods-available/mongo.ini /etc/php5/cli/conf.d/20-mongo.ini
 ln -s /etc/php5/mods-available/mongo.ini /etc/php5/fpm/conf.d/20-mongo.ini
 
-#echo "deb http://www.deb-multimedia.org jessie main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
-#echo "deb-src http://www.deb-multimedia.org jessie main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
+#echo "deb http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
+#echo "deb-src http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
 #apt-get update && \
 #apt-get install deb-multimedia-keyring
 
 
-echo "deb http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
-echo "deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
+echo "deb http://packages.dotdeb.org wheezy all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
+echo "deb-src http://packages.dotdeb.org wheezy all" >> /etc/apt/sources.list.d/dotdeb.org.list && \
 wget http://www.dotdeb.org/dotdeb.gpg && \
 apt-key add dotdeb.gpg && \
 apt-get update && apt-get upgrade \
