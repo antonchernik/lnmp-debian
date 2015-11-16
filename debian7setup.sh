@@ -80,15 +80,15 @@ ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
 
 
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
-echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list
-apt-get update; apt-get upgrade -y;
-apt-get install -y mongodb-org
-service mongod start
-pecl install mongo
-echo "extension=mongo.so" | tee /etc/php5/mods-available/mongo.ini
-ln -s /etc/php5/mods-available/mongo.ini /etc/php5/cli/conf.d/20-mongo.ini
-ln -s /etc/php5/mods-available/mongo.ini /etc/php5/fpm/conf.d/20-mongo.ini
+#apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+#echo "deb http://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.0 main" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+#apt-get update; apt-get upgrade -y;
+#apt-get install -y mongodb-org
+#service mongod start
+#pecl install mongo
+#echo "extension=mongo.so" | tee /etc/php5/mods-available/mongo.ini
+#ln -s /etc/php5/mods-available/mongo.ini /etc/php5/cli/conf.d/20-mongo.ini
+#ln -s /etc/php5/mods-available/mongo.ini /etc/php5/fpm/conf.d/20-mongo.ini
 
 #echo "deb http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
 #echo "deb-src http://www.deb-multimedia.org wheezy main non-free" >> /etc/apt/sources.list.d/deb-multimedia.list && \
