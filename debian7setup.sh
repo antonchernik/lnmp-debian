@@ -63,9 +63,9 @@ sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/php.
 apt-get -y install imagemagick php5-imagick
 apt-get -y install sendmail-bin sensible-mda
 apt-get -y install gcc g++ libboost-dev
-apt-get -y install libboost-program-options-dev libboost-all-dev libevent-dev cloog-ppl
+apt-get -y install libboost-program-options-dev libboost-all-dev libevent-dev cloog-ppl gperf
 wget https://launchpad.net/gearmand/1.2/1.1.11/+download/gearmand-1.1.11.tar.gz
-tar -xvf gearmand-1.1.1.tar.gz && cd gearmand-1.1.1/
+tar -xvf gearmand-1.1.11.tar.gz && cd gearmand-1.1.11/
 ./configure
 make
 make install && cd ..
