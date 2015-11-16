@@ -5,8 +5,8 @@ USER=cmsil
 GROUP=cmsil
 #Debian user password
 PASSWORD=access
-#Mysql root password
-#MYSQL_ROOT_PASSWORD=access
+#GIT user EMAIL
+GITEMAIL=user@localhost.local
 #If user does not exists create it
 adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/' /home/$USER/.bashrc
@@ -96,3 +96,6 @@ apt-key add dotdeb.gpg && \
 apt-get update && apt-get upgrade \
 rm dotdeb.gpg
 apt-get -y install nginx
+/bin/su - $USER -c "git config --global user.name '$USER'"
+/bin/su - $USER -c "git config --global user.email '$GITEMAIL'"
+/bin/su - $USER -c "ssh-keygen -t rsa -N '' -C '$GITEMAIL'"
