@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Gearman server and library
+# Copyright (C) 2008 Brian Aker, Eric Day
+# All rights reserved.
+#
+# Use and distribution licensed under the BSD license.  See
+# the COPYING file in this directory for full text.
+
+prefix=/usr/local
+exec_prefix=${prefix}
+GEARMAND=${exec_prefix}/sbin/gearmand
+PIDFILE=/var/run/gearmand/gearmand.pid
+LOGFILE=/var/log/gearmand.log
+
+start()
+{
+  mkdir -p /var/run/gearmand/
+  chmod g+w /var/run/gearmand/
+  chgrp www-data /var/run/gearmand/
+  $GEARMAND -d -P $PIDFILE -l $LOGFILE
+}
+
+stop()
+{
+  kill `cat $PIDFILE`
+  rm -f $PIDFILE
+}
+
+case "$1" in
+
+  start)
+    start
+  ;;
+
+  stop)
+    stop
+  ;;
+
+  restart)
+    stop
+    start
+  ;;
+
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+  ;;
+
+esac
