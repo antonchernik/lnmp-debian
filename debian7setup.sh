@@ -85,7 +85,7 @@ ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
 wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/init.d/gearmand -P /etc/init.d
 chmod +x /etc/init.d/gearmand
 update-rc.d -f gearmand defaults
-/etc/init.d/gearmand restart
+/etc/init.d/gearmand start
 /etc/init.d/php5-fpm restart
 
 
