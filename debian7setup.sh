@@ -66,7 +66,16 @@ apt-get -y install imagemagick php5-imagick
 apt-get -y install sendmail-bin sensible-mda
 apt-get -y install gcc g++ libboost-dev libboost-program-options-dev
 apt-get -y install gearman-job-server libgearman-dev
-pecl install gearman
+pecl download gearman-1.1.0
+tar -xvf gearman-1.1.0.tgz
+cd gearman-1.1.0
+phpize
+./configure
+make
+checkinstall
+make clean
+make test
+make install
 echo "extension=gearman.so" | tee /etc/php5/mods-available/gearman.ini
 ln -s /etc/php5/mods-available/gearman.ini /etc/php5/cli/conf.d/20-gearman.ini
 ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
@@ -111,18 +120,18 @@ apt-get -y install nginx
 #apt-get -y --force-yes install mysql-server
 #mysql_secure_installation
 
-mkdir /opt/lnmp-debian
-wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables.up.rules -P /opt/lnmp-debian
-wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables -P /opt/lnmp-debian
-mv /opt/lnmp-debian/iptables /etc/network/if-pre-up.d/iptables
-chmod +x /etc/network/if-pre-up.d/iptables
-mkdir /opt/lnmp-debian/ipset
-wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
+#mkdir /opt/lnmp-debian
+#wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables.up.rules -P /opt/lnmp-debian
+#wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables -P /opt/lnmp-debian
+#mv /opt/lnmp-debian/iptables /etc/network/if-pre-up.d/iptables
+#chmod +x /etc/network/if-pre-up.d/iptables
+#mkdir /opt/lnmp-debian/ipset
+#wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
 #wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
-ipset -N china hash:net
-for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
+#ipset -N china hash:net
+#for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
 #ipset -N blacklist hash:net
 #for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blacklist $i; done
 
 #Load Iptables
-/sbin/iptables-restore < /opt/lnmp-debian/iptables.up.rules
+#/sbin/iptables-restore < /opt/lnmp-debian/iptables.up.rules
