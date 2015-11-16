@@ -6,7 +6,7 @@ GROUP=cmsil
 #Debian user password
 PASSWORD=access
 #Mysql root password
-MYSQL_ROOT_PASSWORD=access
+#MYSQL_ROOT_PASSWORD=access
 #If user does not exists create it
 adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/' /home/$USER/.bashrc
@@ -105,10 +105,10 @@ rm dotdeb.gpg
 apt-get -y install nginx
 
 
-export DEBIAN_FRONTEND="noninteractive"
-echo mysql-community-server mysql-community-server/root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
-echo mysql-community-server mysql-community-server/re-root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
-apt-get -y --force-yes install mysql-server
+#export DEBIAN_FRONTEND="noninteractive"
+#echo mysql-community-server mysql-community-server/root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
+#echo mysql-community-server mysql-community-server/re-root-pass password $MYSQL_ROOT_PASSWORD | debconf-set-selections
+#apt-get -y --force-yes install mysql-server
 #mysql_secure_installation
 
 mkdir /opt/lnmp-debian
@@ -118,11 +118,11 @@ mv /opt/lnmp-debian/iptables /etc/network/if-pre-up.d/iptables
 chmod +x /etc/network/if-pre-up.d/iptables
 mkdir /opt/lnmp-debian/ipset
 wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
-wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
+#wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
 ipset -N china hash:net
 for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
-ipset -N blacklist hash:net
-for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blacklist $i; done
+#ipset -N blacklist hash:net
+#for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blacklist $i; done
 
 #Load Iptables
 /sbin/iptables-restore < /opt/lnmp-debian/iptables.up.rules
