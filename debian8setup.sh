@@ -1,8 +1,8 @@
 #!/bin/sh
 #Debian user
-USER=cmsil
+USER=user
 #Debian user group
-GROUP=cmsil
+GROUP=user
 #Debian user password
 PASSWORD=access
 #Mysql root password
