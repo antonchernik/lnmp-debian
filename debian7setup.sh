@@ -97,7 +97,10 @@ wget http://www.dotdeb.org/dotdeb.gpg && \
 apt-key add dotdeb.gpg && \
 apt-get update && apt-get upgrade \
 rm dotdeb.gpg
+#Install latest nginx
 apt-get -y install nginx
+#PHP mysql client for mysql5.6
+apt-get -y install php5-mysql
 
 /bin/su - $USER -c "mkdir -p /home/$USER/conf/nginx/sites-enabled"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/base.conf -P /home/$USER/conf/nginx"
