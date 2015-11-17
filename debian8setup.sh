@@ -152,6 +152,6 @@ for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blackli
 /bin/su - $USER -c "git config --global user.name '$GITNAME'"
 /bin/su - $USER -c "git config --global user.email '$GITEMAIL'"
 /bin/su - $USER -c "ssh-keygen -t rsa -N '' -f /home/$USER/.ssh/id_rsa -C '$GITEMAIL'"
-echo "PLEASE ADD THIS KEY GITLAB:";
+echo "PLEASE ADD THIS KEY TO GITLAB:";
 /bin/cat /home/$USER/.ssh/id_rsa.pub
 
