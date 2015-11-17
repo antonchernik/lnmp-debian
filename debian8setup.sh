@@ -24,8 +24,8 @@ gpg --keyserver pgp.mit.edu --recv-keys 1F41B907
 gpg --armor --export 1F41B907 | apt-key add
 update-alternatives --set editor /usr/bin/vim.basic
 locale-gen "$LOCALE"
-sed -i -e 's/# $LOCALE UTF-8/$LOCALE UTF-8/' /etc/locale.gen && \
-echo 'LANG="$LOCALE"'>/etc/default/locale && \
+sed -i -e "s/# $LOCALE UTF-8/$LOCALE UTF-8/" /etc/locale.gen && \
+echo "LANG=$LOCALE">/etc/default/locale && \
 dpkg-reconfigure --frontend=noninteractive locales && \
 update-locale LANG="$LOCALE"
 echo $LOCAL > /etc/timezone && \
