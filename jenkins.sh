@@ -26,5 +26,6 @@ wget http://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
 mv chromedriver /usr/local/bin/chromedriver
 rm chromedriver_linux64.zip
-/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/jenkins.conf -P -P /home/$USER/conf/nginx/sites-enabled"
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/jenkins.conf -P /home/$USER/conf/nginx/sites-enabled"
 sed -i -e "s/jenkins.localhost/$JENKINSHOST/g" /home/$USER/conf/nginx/sites-enabled/jenkins.conf
+/etc/init.d/nginx restart
