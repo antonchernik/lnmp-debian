@@ -104,8 +104,24 @@ apt-get -y install nodejs libcairo2-dev
 npm install node-sprite-generator -g
 npm install less -g
 
+mkdir /opt/lnmp-debian
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables.up.rules -P /opt/lnmp-debian
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables -P /opt/lnmp-debian
+mv /opt/lnmp-debian/iptables /etc/network/if-pre-up.d/iptables
+chmod +x /etc/network/if-pre-up.d/iptables
+mkdir /opt/lnmp-debian/ipset
+wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
+ipset -N china hash:net
+for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
+ipset -N blacklist hash:net
+
+#Load Iptables
+/sbin/iptables-restore < /opt/lnmp-debian/iptables.up.rules
+
 /bin/su - $USER -c "git config --global user.name '$GITNAME'"
 /bin/su - $USER -c "git config --global user.email '$GITEMAIL'"
 /bin/su - $USER -c "ssh-keygen -t rsa -N '' -f /home/$USER/.ssh/id_rsa -C '$GITEMAIL'"
 echo "PLEASE ADD THIS KEY GITLAB:";
 /bin/cat /home/$USER/.ssh/id_rsa.pub
+
+
