@@ -6,7 +6,7 @@ JENKINSHOST=jenkins.localhost
 wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 echo "deb http://pkg.jenkins-ci.org/debian binary/" >> /etc/apt/sources.list.d/jenkins.list
 apt-get update
-apt-get install jenkins
+apt-get -y install jenkins
 wget http://localhost:8080/jnlpJars/jenkins-cli.jar
 java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle cloverphp crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
 java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart
