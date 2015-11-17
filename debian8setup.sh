@@ -70,13 +70,32 @@ sed -i -e "s/;listen.mode = 0660/listen.mode = 0750/g" /etc/php5/fpm/pool.d/php.
 
 apt-get -y install imagemagick php5-imagick
 apt-get -y install sendmail-bin sensible-mda
-apt-get -y install gcc g++ libboost-dev libboost-program-options-dev
-apt-get -y install gearman-job-server libgearman-dev
-pecl install gearman
+apt-get -y install gcc g++ libboost-dev
+apt-get -y install libboost-program-options-dev libboost-all-dev libevent-dev cloog-ppl gperf uuid-dev libgearman-dev
+wget https://launchpad.net/gearmand/1.2/1.1.12/+download/gearmand-1.1.12.tar.gz
+tar -xvf gearmand-1.1.12.tar.gz && cd gearmand-1.1.12/
+./configure
+make
+make install && cd ..
+rm gearmand-1.1.12.tar.gz
+pecl download gearman-1.1.2
+tar -xvf gearman-1.1.2.tgz
+cd gearman-1.1.2
+phpize
+./configure
+make
+checkinstall
+make clean
+make test
+make install && cd ..
+rm gearman-1.1.2.tgz
 echo "extension=gearman.so" | tee /etc/php5/mods-available/gearman.ini
 ln -s /etc/php5/mods-available/gearman.ini /etc/php5/cli/conf.d/20-gearman.ini
 ln -s /etc/php5/mods-available/gearman.ini /etc/php5/fpm/conf.d/20-gearman.ini
-/etc/init.d/gearman-job-server restart
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/init.d/gearmand -P /etc/init.d
+chmod +x /etc/init.d/gearmand
+update-rc.d -f gearmand defaults
+/etc/init.d/gearmand start
 /etc/init.d/php5-fpm restart
 
 echo "deb-src http://repo.mysql.com/apt/debian/ jessie mysql-5.7" >> /etc/apt/sources.list.d/mysql.list
