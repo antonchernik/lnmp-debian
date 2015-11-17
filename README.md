@@ -6,9 +6,8 @@ chmod +x /opt/debian8setup.sh <br />
 
 
 #Jenkins setup:
-##Can be executed only after *setup.sh executed successfully
 cd /opt <br />
 wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/jenkins.sh <br />
 chmod +x /opt/jenkins.sh <br />
-./jenkins.sh
-
+./jenkins.sh <br />
+Can be executed only after *setup.sh executed successfully
