@@ -98,6 +98,14 @@ apt-key add dotdeb.gpg && \
 apt-get update && apt-get upgrade \
 rm dotdeb.gpg
 apt-get -y install nginx
+
+curl -sL https://deb.nodesource.com/setup | sudo bash -
+apt-get -y install nodejs libcairo2-dev
+npm install node-sprite-generator -g
+npm install less -g
+
 /bin/su - $USER -c "git config --global user.name '$GITNAME'"
 /bin/su - $USER -c "git config --global user.email '$GITEMAIL'"
 /bin/su - $USER -c "ssh-keygen -t rsa -N '' -f /home/$USER/.ssh/id_rsa -C '$GITEMAIL'"
+echo "PLEASE ADD THIS KEY GITLAB:";
+/bin/cat /home/$USER/.ssh/id_rsa.pub
