@@ -1,6 +1,8 @@
 #!/bin/sh
+#Debian user
+USER=user
 #Jenkins host
-JENKINS_HOST=jenkins.localhost
+JENKINSHOST=jenkins.localhost
 wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 echo "deb http://pkg.jenkins-ci.org/debian binary/" >> /etc/apt/sources.list.d/jenkins.list
 apt-get update
@@ -24,3 +26,5 @@ wget http://chromedriver.storage.googleapis.com/2.20/chromedriver_linux64.zip
 unzip chromedriver_linux64.zip
 mv chromedriver /usr/local/bin/chromedriver
 rm chromedriver_linux64.zip
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/jenkins.conf -P -P /home/$USER/conf/nginx/sites-enabled"
+sed -i -e "s/jenkins.localhost/$JENKINSHOST/g" /home/$USER/conf/nginx/sites-enabled
