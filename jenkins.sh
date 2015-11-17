@@ -7,9 +7,7 @@ wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 echo "deb http://pkg.jenkins-ci.org/debian binary/" >> /etc/apt/sources.list.d/jenkins.list
 apt-get update
 apt-get -y install jenkins
-wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle cloverphp crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
-java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart
+/etc/init.d/jenkins start
 apt-get -y install xvfb gtk2-engines-pixbuf
 apt-get -y install xfonts-base xfonts-75dpi xfonts-100dpi
 apt-get -y install xfonts-scalable xfonts-cyrillic
@@ -29,5 +27,9 @@ rm chromedriver_linux64.zip
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/jenkins.conf -P /home/$USER/conf/nginx/sites-enabled"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/upstream-jenkins.conf -P /home/$USER/conf/nginx/upstream"
 sed -i -e "s/jenkins.localhost/$JENKINSHOST/g" /home/$USER/conf/nginx/sites-enabled/jenkins.conf
-
 /etc/init.d/nginx restart
+wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin checkstyle cloverphp crap4j dry htmlpublisher jdepend plot pmd violations warnings xunit
+java -jar jenkins-cli.jar -s http://localhost:8080 safe-restart
+
+
