@@ -18,7 +18,7 @@ apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debco
 gpg --keyserver pgp.mit.edu --recv-keys 1F41B907
 gpg --armor --export 1F41B907 | apt-key add
 update-alternatives --set editor /usr/bin/vim.basic
-locale-gen "ru_RU.UTF-8"
+locale-gen "en_US.UTF-8"
 sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
 dpkg-reconfigure --frontend=noninteractive locales && \
