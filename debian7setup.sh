@@ -99,6 +99,15 @@ apt-get update && apt-get upgrade \
 rm dotdeb.gpg
 apt-get -y install nginx
 
+/bin/su - $USER -c "mkdir -p /home/$USER/conf/nginx"
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/base.conf -P /home/$USER/conf/nginx"
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/fastcgi.conf -P /home/$USER/conf/nginx"
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/upstream-phpfpm.conf -P /home/$USER/conf/nginx"
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/vhost-phpfpm.conf -P /home/$USER/conf/nginx"
+
+
+
+
 curl -sL https://deb.nodesource.com/setup_4.x | bash -
 apt-get -y install nodejs libcairo2-dev
 npm install node-sprite-generator -g
