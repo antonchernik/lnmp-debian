@@ -131,6 +131,7 @@ apt-get -y install nginx
 apt-get -y install supervisor
 
 /bin/su - $USER -c "mkdir -p /home/$USER/conf/nginx/sites-enabled"
+/bin/su - $USER -c "mkdir -p /home/$USER/conf/nginx/upstream"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/base.conf -P /home/$USER/conf/nginx"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/fastcgi.conf -P /home/$USER/conf/nginx"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/upstream-phpfpm.conf -P /home/$USER/conf/nginx"
