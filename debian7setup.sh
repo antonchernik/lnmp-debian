@@ -99,7 +99,7 @@ apt-get update && apt-get upgrade \
 rm dotdeb.gpg
 apt-get -y install nginx
 
-curl -sL https://deb.nodesource.com/setup | sudo bash -
+curl -sL https://deb.nodesource.com/setup_4.x | bash -
 apt-get -y install nodejs libcairo2-dev
 npm install node-sprite-generator -g
 npm install less -g
