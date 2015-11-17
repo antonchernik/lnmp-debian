@@ -101,7 +101,6 @@ apt-get -y install nginx
 
 curl -sL https://deb.nodesource.com/setup_4.x | bash -
 apt-get -y install nodejs libcairo2-dev
-ln -s /usr/bin/nodejs /usr/bin/node
 npm install node-sprite-generator -g
 npm install less -g
 
