@@ -134,11 +134,11 @@ apt-get -y install supervisor
 /bin/su - $USER -c "mkdir -p /home/$USER/conf/nginx/upstream"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/base.conf -P /home/$USER/conf/nginx"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/fastcgi.conf -P /home/$USER/conf/nginx"
-/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/upstream-phpfpm.conf -P /home/$USER/conf/nginx"
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/upstream/upstream-phpfpm.conf -P /home/$USER/conf/nginx"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/vhost-phpfpm.conf -P /home/$USER/conf/nginx"
-sed -i -e "s/gzip on;/include \/home\/$USER\/conf\/nginx\/upstream-phpfpm.conf;\n        gzip on;/g" /etc/nginx/nginx.conf
+sed -i -e "s/gzip on;/include \/home\/$USER\/conf\/nginx\/upstream\/*.conf;\n        gzip on;/g" /etc/nginx/nginx.conf
 sed -i -e "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n        include \/home\/$USER\/conf\/nginx\/sites-enabled\/\*.conf;/g" /etc/nginx/nginx.conf
-
+/etc/init.d/nginx restart
 
 
 curl -sL https://deb.nodesource.com/setup_4.x | bash -
