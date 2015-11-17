@@ -10,7 +10,10 @@ MYSQL_ROOT_PASSWORD=access
 #Locale
 LOCAL="Europe/Kiev"
 LOCALE="ru_RU.UTF-8"
-
+#Git user NAME
+GITNAME=cmsil
+#GIT user EMAIL
+GITEMAIL=cmsil@localhost.local
 #If user does not exists create it
 adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpasswd
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/' /home/$USER/.bashrc
