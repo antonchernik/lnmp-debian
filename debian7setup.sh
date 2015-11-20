@@ -1,10 +1,15 @@
 #!/bin/sh
 #Debian user
-USER=cmsil
+USER=user
 #Debian user group
-GROUP=cmsil
+GROUP=user
 #Debian user password
 PASSWORD=access
+#Mysql root password
+MYSQL_ROOT_PASSWORD=access
+#Locale
+LOCAL="Asia/Tel_Aviv"
+LOCALE="en_US.UTF-8"
 #Git user NAME
 GITNAME=cmsil
 #GIT user EMAIL
@@ -14,25 +19,26 @@ adduser $USER --disabled-password --gecos "" && echo "$USER:$PASSWORD" | chpassw
 sed -i -e 's/#force_color_prompt=yes/force_color_prompt=yes/' /home/$USER/.bashrc
 
 apt-get update; apt-get upgrade -y;
-apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils ipset debian-keyring fail2ban
+apt-get -y install vim htop cron zip unzip wget curl mc sudo apache2-utils debconf-utils ipset debian-keyring fail2ban git
 gpg --keyserver pgp.mit.edu --recv-keys 1F41B907
 gpg --armor --export 1F41B907 | apt-key add
 update-alternatives --set editor /usr/bin/vim.basic
-locale-gen "en_US.UTF-8"
-sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-echo 'LANG="en_US.UTF-8"'>/etc/default/locale && \
+locale-gen "$LOCALE"
+sed -i -e "s/# $LOCALE UTF-8/$LOCALE UTF-8/" /etc/locale.gen && \
+echo "LANG=$LOCALE">/etc/default/locale && \
 dpkg-reconfigure --frontend=noninteractive locales && \
-update-locale LANG=en_US.UTF-8
-echo "Asia/Tel_Aviv" > /etc/timezone && \
+update-locale LANG="$LOCALE"
+echo $LOCAL > /etc/timezone && \
 dpkg-reconfigure -f noninteractive tzdata
 
 sed -i -e 's/"syntax on/syntax on\ncolorscheme ron\nset number/' /etc/vim/vimrc
+#echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'" >> ~/.bashrc
 
-apt-get -y install bsdutils build-essential libaio1 libssl-dev libcurl4-openssl-dev libevent-dev git sendmail-bin sensible-mda
+apt-get -y install bsdutils build-essential libaio1 libssl-dev libcurl4-openssl-dev libevent-dev sendmail-bin sensible-mda
 apt-get -y install module-init-tools
 apt-get -y install php5-cli php-pear php5-curl php5-gd php5-mcrypt php5-dev php5-intl php5-fpm memcached php5-memcached php5-xsl imagemagick php5-imagick
-sed -i 's/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tel_Aviv/g' /etc/php5/cli/php.ini
-sed -i 's/\;date\.timezone\ \=/date\.timezone\ \=\ Asia\/Tel_Aviv/g' /etc/php5/fpm/php.ini
+sed -i 's/\;date\.timezone\ \=/date\.timezone\ \=\ $LOCAL/g' /etc/php5/cli/php.ini
+sed -i 's/\;date\.timezone\ \=/date\.timezone\ \=\ $LOCAL/g' /etc/php5/fpm/php.ini
 sed -i "s/max_execution_time = .*/max_execution_time = 60/" /etc/php5/fpm/php.ini
 sed -i "s/upload_max_filesize = .*/upload_max_filesize = 32M/" /etc/php5/fpm/php.ini
 sed -i "s/post_max_size = .*/post_max_size = 32M/" /etc/php5/fpm/php.ini
@@ -97,18 +103,16 @@ wget http://www.dotdeb.org/dotdeb.gpg && \
 apt-key add dotdeb.gpg && \
 apt-get update && apt-get upgrade \
 rm dotdeb.gpg
-#Install latest nginx
 apt-get -y install nginx
-#PHP mysql client for mysql5.6
-apt-get -y install php5-mysql
 apt-get -y install supervisor
 
 /bin/su - $USER -c "mkdir -p /home/$USER/conf/nginx/sites-enabled"
+/bin/su - $USER -c "mkdir -p /home/$USER/conf/nginx/upstream"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/base.conf -P /home/$USER/conf/nginx"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/fastcgi.conf -P /home/$USER/conf/nginx"
-/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/upstream-phpfpm.conf -P /home/$USER/conf/nginx"
+/bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/upstream-phpfpm.conf -P /home/$USER/conf/nginx/upstream"
 /bin/su - $USER -c "wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/nginx/vhost-phpfpm.conf -P /home/$USER/conf/nginx"
-sed -i -e "s/gzip on;/include \/home\/$USER\/conf\/nginx\/upstream-phpfpm.conf;\n        gzip on;/g" /etc/nginx/nginx.conf
+sed -i -e "s/gzip on;/include \/home\/$USER\/conf\/nginx\/upstream\/*.conf;\n        gzip on;/g" /etc/nginx/nginx.conf
 sed -i -e "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n        include \/home\/$USER\/conf\/nginx\/sites-enabled\/\*.conf;/g" /etc/nginx/nginx.conf
 /etc/init.d/nginx restart
 
@@ -126,9 +130,11 @@ mv /opt/lnmp-debian/iptables /etc/network/if-pre-up.d/iptables
 chmod +x /etc/network/if-pre-up.d/iptables
 mkdir /opt/lnmp-debian/ipset
 wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
 ipset -N china hash:net
 for i in $(cat /opt/lnmp-debian/ipset/cn.zone ); do ipset -A china $i; done
 ipset -N blacklist hash:net
+for i in $(cat /opt/lnmp-debian/ipset/ipset-blacklist.txt ); do ipset -A blacklist $i; done
 
 #Load Iptables
 /sbin/iptables-restore < /opt/lnmp-debian/iptables.up.rules
@@ -136,7 +142,5 @@ ipset -N blacklist hash:net
 /bin/su - $USER -c "git config --global user.name '$GITNAME'"
 /bin/su - $USER -c "git config --global user.email '$GITEMAIL'"
 /bin/su - $USER -c "ssh-keygen -t rsa -N '' -f /home/$USER/.ssh/id_rsa -C '$GITEMAIL'"
-echo "PLEASE ADD THIS KEY GITLAB:";
+echo "PLEASE ADD THIS KEY TO GITLAB:";
 /bin/cat /home/$USER/.ssh/id_rsa.pub
-
-
