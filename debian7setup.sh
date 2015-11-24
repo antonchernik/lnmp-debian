@@ -129,6 +129,8 @@ wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/iptables 
 mv /opt/lnmp-debian/iptables /etc/network/if-pre-up.d/iptables
 chmod +x /etc/network/if-pre-up.d/iptables
 mkdir /opt/lnmp-debian/ipset
+wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/update-ipset.sh -P /opt/lnmp-debian
+chmod +x /opt/lnmp-debian/update-ipset.sh
 wget http://www.ipdeny.com/ipblocks/data/countries/cn.zone -P /opt/lnmp-debian/ipset
 wget https://raw.githubusercontent.com/antonchernik/lnmp-debian/master/ipset-blacklist.txt -P /opt/lnmp-debian/ipset
 ipset -N china hash:net
