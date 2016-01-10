@@ -140,7 +140,7 @@ sed -i -e "s/gzip on;/include \/home\/$USER\/conf\/nginx\/upstream\/*.conf;\n   
 sed -i -e "s/include \/etc\/nginx\/sites-enabled\/\*;/include \/etc\/nginx\/sites-enabled\/\*;\n        include \/home\/$USER\/conf\/nginx\/sites-enabled\/\*.conf;/g" /etc/nginx/nginx.conf
 /etc/init.d/nginx restart
 
-
+apt-get install libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
 curl -sL https://deb.nodesource.com/setup_4.x | bash -
 apt-get -y install nodejs libcairo2-dev
 npm install node-sprite-generator -g
